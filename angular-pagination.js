@@ -18,51 +18,19 @@ paginationModule.factory("Pagination", function(){
     this.set(obj)
   }
   /**
-   * Limit per page
-   * @type {number}
-   */
-  pagination.prototype.limit = 10
-  /**
-   * Total number of records
-   * @type {number}
-   */
-  pagination.prototype.total = 0
-  /**
-   * Starting record number
-   * @type {number}
-   */
-  pagination.prototype.start = 0
-  /**
-   * Total number of pages
-   * @type {number}
-   */
-  pagination.prototype.pages = 0
-  /**
-   * Current page
-   * @type {number}
-   */
-  pagination.prototype.page = 1
-  /**
    * Max number of page buttons to show
    * @type {number}
    */
   pagination.prototype.buttons_max = 5
-  /**
-   * Range variables for displaying record stats eg:
-   *  {{ pg.range.start }} - {{ pg.range.end }} of {{ pg.range.total }} entries
-   * @type {{start: number, end: number, total: number}}
-   */
-  pagination.prototype.range = {
-    start: 0,
-    end: 0,
-    total: 0
-  }
   /**
    * Startup pagination (do page math)
    */
   pagination.prototype.process = function(){
     this.pages = Math.ceil(this.total / this.limit)
     this.page = Math.ceil(this.start / this.limit) + 1
+    if("object" !== typeof this.range) {
+       this.range = {};
+    }
     this.range.start = (this.total > 0) ? (this.start + 1) : 0
     if(this.range.start > this.total)
       this.range.start = this.total
